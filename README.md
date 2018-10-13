@@ -18,12 +18,13 @@ I have decoded the [Daktronics scoreboard signal](https://xy-kao.com/projects/de
 
 ## Physical layer
 The raw signal from the NPC-5 on the oscilloscope looks like this:
-![alt text](https://xy-kao.com/projects/reverse-engineering-a-serial-scoreboard-protocol-nevco-mpc-5/source.png)
+
+<img src="https://xy-kao.com/projects/reverse-engineering-a-serial-scoreboard-protocol-nevco-mpc-5/source.png" width="300">
 
 So the signal is ~5Vpp ~262KHz, which is a little off from the standard 256KHz for RS232. There also isn't a stop bit. There aren't many serial protocols at this frequency that run on coaxial cable, and the ones I have used before (DMX, RS232/485, CAN bus, I2C, SPI) do not match the signal or cabling, so some more research needed to be done.
 
 After some research, it looks like this signal is a variation of the [1-Wire protocol](https://en.wikipedia.org/wiki/1-Wire), possibly inverted. Some more analysis with the logic analyzer:
-<img class='mobile-max-width img-center' src="{% asset_path pulse.png %}" style=''>
+<img src="https://xy-kao.com/projects/reverse-engineering-a-serial-scoreboard-protocol-nevco-mpc-5/pulse.png" width="300">
 
 I have added annotations to where I deduced the bits are. I have made the assumption that all bits start on the rising-edge. 1-Wire specification says it starts on the falling-edge, but either way, the same bitstream can be read. With the logic analyzer, the following deductions can be made:
 
