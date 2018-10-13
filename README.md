@@ -1,4 +1,12 @@
-## Extended documentation at https://xy-kao.com/projects/reverse-engineering-a-serial-scoreboard-protocol-nevco-mpc-5/
+### Extended documentation at https://xy-kao.com/projects/reverse-engineering-a-serial-scoreboard-protocol-nevco-mpc-5/
+
+### Folders
+- *`atmega328_MPC_5_signal_generator`* - replicates a signal from the MPC-5
+- *`attiny85_multivibrator`* - microcontroller based multivibrator (1MHz)
+- *`logic_analyzer_vcd_dumps`* - dumps from the logic analyzer, used to find correct bit positions in bitstream
+- *`MPC-5_decoder_schematic`* - schematic diagram for the circuitry
+- *`oscilloscope_screenshots`* - screenshots from the oscilloscope
+- *`teensy_decoder`* - primary microcontroller to interpret bitstream and send over serial to computer
 
 
 I have decoded the [Daktronics scoreboard signal](https://xy-kao.com/projects/decoding-daktronics-omnisport-2000/) in the past for a swim meet, but this time it's a Nevco MPC-5 multipurpose controller for a basketball. This was considerably more difficult to reverse engineer for several reasons:
