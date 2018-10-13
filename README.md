@@ -9,7 +9,7 @@
 - *`teensy_decoder`* - primary microcontroller to interpret bitstream and send over serial to computer
 
 
-I have decoded the [Daktronics scoreboard signal](https://xy-kao.com/projects/decoding-daktronics-omnisport-2000/) in the past for a swim meet, but this time it's a Nevco MPC-5 multipurpose controller for a basketball. This was considerably more difficult to reverse engineer for several reasons:
+I have decoded the [Daktronics scoreboard signal](https://xy-kao.com/projects/decoding-daktronics-omnisport-2000/ | width=100) in the past for a swim meet, but this time it's a Nevco MPC-5 multipurpose controller for a basketball. This was considerably more difficult to reverse engineer for several reasons:
 
 - The Daktronics is standard RS232, the MPC-5 runs a non-standard signal
 - The MPC-5 sends all scoreboard information over a single coaxial cable
@@ -18,7 +18,7 @@ I have decoded the [Daktronics scoreboard signal](https://xy-kao.com/projects/de
 
 ## Physical layer
 The raw signal from the NPC-5 on the oscilloscope looks like this:
-<img class='mobile-max-width img-center' src="{% asset_path source.png %}" style='width:500px'>
+![alt text](https://xy-kao.com/projects/reverse-engineering-a-serial-scoreboard-protocol-nevco-mpc-5/source.png)
 
 So the signal is ~5Vpp ~262KHz, which is a little off from the standard 256KHz for RS232. There also isn't a stop bit. There aren't many serial protocols at this frequency that run on coaxial cable, and the ones I have used before (DMX, RS232/485, CAN bus, I2C, SPI) do not match the signal or cabling, so some more research needed to be done.
 
