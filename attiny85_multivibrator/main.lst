@@ -1,0 +1,139 @@
+   1               		.file	"main.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	__vector_1
+  18               	__vector_1:
+  19               	.LFB7:
+  20               	.LM1:
+  21               	/* prologue: naked */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24               	/* #APP */
+  25               	 ;  75 "main.c" 1
+  26 0000 0F92      		push r0
+  27 0002 0FB6      	in r0, 0x3F
+  28 0004 0F92      	push r0
+  29               	 ;  0 "" 2
+  30               	.LM3:
+  31               	/* #NOAPP */
+  32 0006 C19A      		sbi 56-32,1
+  33               	.LM4:
+  34 0008 00C0      		rjmp .
+  35 000a 00C0      		rjmp .
+  36 000c 0000      		nop
+  37               	.LM5:
+  38 000e C198      		cbi 56-32,1
+  39               	.LM6:
+  40               	/* #APP */
+  41               	 ;  85 "main.c" 1
+  42 0010 0F90      		pop r0
+  43 0012 0FBE      	out 0x3f, r0
+  44 0014 0F90      	pop r0
+  45 0016 1895      	reti
+  46               	
+  47               	 ;  0 "" 2
+  48               	/* epilogue start */
+  49               	.LM7:
+  50               	/* #NOAPP */
+  51               	.LFE7:
+  53               	.global	main
+  55               	main:
+  56               	.LFB6:
+  57               	.LM8:
+  58               	/* prologue: function */
+  59               	/* frame size = 0 */
+  60               	.LM9:
+  61 0018 B99A      		sbi 55-32,1
+  62               	.LM10:
+  63 001a B89A      		sbi 55-32,0
+  64               	.LM11:
+  65 001c BA98      		cbi 55-32,2
+  66               	.LM12:
+  67               	/* #APP */
+  68               	 ;  33 "main.c" 1
+  69 001e 7894      		sei
+  70               	 ;  0 "" 2
+  71               	.LM13:
+  72               	/* #NOAPP */
+  73 0020 85B7      		in r24,85-32
+  74 0022 8160      		ori r24,lo8(1)
+  75 0024 85BF      		out 85-32,r24
+  76               	.LM14:
+  77 0026 85B7      		in r24,85-32
+  78 0028 8260      		ori r24,lo8(2)
+  79 002a 85BF      		out 85-32,r24
+  80               	.LM15:
+  81 002c 8BB7      		in r24,91-32
+  82 002e 8064      		ori r24,lo8(64)
+  83 0030 8BBF      		out 91-32,r24
+  84               	.L10:
+  85               	.LM16:
+  86 0032 1092 0000 		sts clocks,__zero_reg__
+  87 0036 00C0      		rjmp .L4
+  88               	.L11:
+  89               	.LM17:
+  90 0038 8091 0000 		lds r24,clocks
+  91 003c 8F5F      		subi r24,lo8(-(1))
+  92 003e 8093 0000 		sts clocks,r24
+  93               	.LM18:
+  94 0042 8091 0000 		lds r24,clocks
+  95 0046 8530      		cpi r24,lo8(5)
+  96 0048 00F0      		brlo .L4
+  97               	.LM19:
+  98 004a 8091 0000 		lds r24,enableInterrupt
+  99 004e 8A30      		cpi r24,lo8(10)
+ 100 0050 01F4      		brne .L5
+ 101               	.LM20:
+ 102 0052 C09A      		sbi 56-32,0
+ 103               	.LM21:
+ 104 0054 B99A      		sbi 55-32,1
+ 105               	.LM22:
+ 106 0056 1092 0000 		sts enableInterrupt,__zero_reg__
+ 107               	.LM23:
+ 108 005a 80E1      		 ldi r24,lo8(16)
+ 109 005c 8A95      	    1:dec r24
+ 110 005e 01F4      	    brne 1b
+ 111 0060 00C0      		rjmp .
+ 112               	.LM24:
+ 113 0062 C098      		cbi 56-32,0
+ 114 0064 00C0      		rjmp .L10
+ 115               	.L5:
+ 116               	.LM25:
+ 117 0066 B998      		cbi 55-32,1
+ 118               	.LM26:
+ 119 0068 8091 0000 		lds r24,enableInterrupt
+ 120 006c 8F5F      		subi r24,lo8(-(1))
+ 121 006e 8093 0000 		sts enableInterrupt,r24
+ 122 0072 00C0      		rjmp .L10
+ 123               	.L4:
+ 124               	.LM27:
+ 125 0074 B29B      		sbis 54-32,2
+ 126 0076 00C0      		rjmp .L10
+ 127 0078 00C0      		rjmp .L11
+ 128               	.LFE6:
+ 130               		.lcomm clocks,1
+ 131               		.data
+ 134               	enableInterrupt:
+ 135 0000 01        		.byte	1
+ 168               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\test\AppData\Local\Temp/ccEGE5v9.s:2      *ABS*:0000003f __SREG__
+C:\Users\test\AppData\Local\Temp/ccEGE5v9.s:3      *ABS*:0000003e __SP_H__
+C:\Users\test\AppData\Local\Temp/ccEGE5v9.s:4      *ABS*:0000003d __SP_L__
+C:\Users\test\AppData\Local\Temp/ccEGE5v9.s:5      *ABS*:00000034 __CCP__
+C:\Users\test\AppData\Local\Temp/ccEGE5v9.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\test\AppData\Local\Temp/ccEGE5v9.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\test\AppData\Local\Temp/ccEGE5v9.s:18     .text:00000000 __vector_1
+C:\Users\test\AppData\Local\Temp/ccEGE5v9.s:55     .text:00000018 main
+                             .bss:00000000 clocks
+C:\Users\test\AppData\Local\Temp/ccEGE5v9.s:134    .data:00000000 enableInterrupt
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,211 @@
+
+main.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000d4  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000002  00800060  000000d4  00000168  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000001  00800062  00800062  0000016a  2**0
+                  ALLOC
+  3 .debug_aranges 00000020  00000000  00000000  0000016a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 0000002a  00000000  00000000  0000018a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000000bc  00000000  00000000  000001b4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000079  00000000  00000000  00000270  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000015d  00000000  00000000  000002e9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000030  00000000  00000000  00000448  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000000b2  00000000  00000000  00000478  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0e c0       	rjmp	.+28     	; 0x1e <__ctors_end>
+   2:	29 c0       	rjmp	.+82     	; 0x56 <__vector_1>
+   4:	27 c0       	rjmp	.+78     	; 0x54 <__bad_interrupt>
+   6:	26 c0       	rjmp	.+76     	; 0x54 <__bad_interrupt>
+   8:	25 c0       	rjmp	.+74     	; 0x54 <__bad_interrupt>
+   a:	24 c0       	rjmp	.+72     	; 0x54 <__bad_interrupt>
+   c:	23 c0       	rjmp	.+70     	; 0x54 <__bad_interrupt>
+   e:	22 c0       	rjmp	.+68     	; 0x54 <__bad_interrupt>
+  10:	21 c0       	rjmp	.+66     	; 0x54 <__bad_interrupt>
+  12:	20 c0       	rjmp	.+64     	; 0x54 <__bad_interrupt>
+  14:	1f c0       	rjmp	.+62     	; 0x54 <__bad_interrupt>
+  16:	1e c0       	rjmp	.+60     	; 0x54 <__bad_interrupt>
+  18:	1d c0       	rjmp	.+58     	; 0x54 <__bad_interrupt>
+  1a:	1c c0       	rjmp	.+56     	; 0x54 <__bad_interrupt>
+  1c:	1b c0       	rjmp	.+54     	; 0x54 <__bad_interrupt>
+
+0000001e <__ctors_end>:
+  1e:	11 24       	eor	r1, r1
+  20:	1f be       	out	0x3f, r1	; 63
+  22:	cf e5       	ldi	r28, 0x5F	; 95
+  24:	d2 e0       	ldi	r29, 0x02	; 2
+  26:	de bf       	out	0x3e, r29	; 62
+  28:	cd bf       	out	0x3d, r28	; 61
+
+0000002a <__do_copy_data>:
+  2a:	10 e0       	ldi	r17, 0x00	; 0
+  2c:	a0 e6       	ldi	r26, 0x60	; 96
+  2e:	b0 e0       	ldi	r27, 0x00	; 0
+  30:	e4 ed       	ldi	r30, 0xD4	; 212
+  32:	f0 e0       	ldi	r31, 0x00	; 0
+  34:	02 c0       	rjmp	.+4      	; 0x3a <.do_copy_data_start>
+
+00000036 <.do_copy_data_loop>:
+  36:	05 90       	lpm	r0, Z+
+  38:	0d 92       	st	X+, r0
+
+0000003a <.do_copy_data_start>:
+  3a:	a2 36       	cpi	r26, 0x62	; 98
+  3c:	b1 07       	cpc	r27, r17
+  3e:	d9 f7       	brne	.-10     	; 0x36 <.do_copy_data_loop>
+
+00000040 <__do_clear_bss>:
+  40:	10 e0       	ldi	r17, 0x00	; 0
+  42:	a2 e6       	ldi	r26, 0x62	; 98
+  44:	b0 e0       	ldi	r27, 0x00	; 0
+  46:	01 c0       	rjmp	.+2      	; 0x4a <.do_clear_bss_start>
+
+00000048 <.do_clear_bss_loop>:
+  48:	1d 92       	st	X+, r1
+
+0000004a <.do_clear_bss_start>:
+  4a:	a3 36       	cpi	r26, 0x63	; 99
+  4c:	b1 07       	cpc	r27, r17
+  4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
+  50:	0e d0       	rcall	.+28     	; 0x6e <main>
+  52:	3e c0       	rjmp	.+124    	; 0xd0 <_exit>
+
+00000054 <__bad_interrupt>:
+  54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
+
+00000056 <__vector_1>:
+}
+
+
+
+ISR(INT0_vect, ISR_NAKED) { 
+	asm( // Standard ISR entry, minus "known zero" setup
+  56:	0f 92       	push	r0
+  58:	0f b6       	in	r0, 0x3f	; 63
+  5a:	0f 92       	push	r0
+		"push r0\n"
+		"in r0, 0x3F\n"  // Save status
+		"push r0" // Might not be needed
+	);
+	on(CLOCK_PULSE);
+  5c:	c1 9a       	sbi	0x18, 1	; 24
+	__builtin_avr_delay_cycles(5);
+  5e:	00 c0       	rjmp	.+0      	; 0x60 <__vector_1+0xa>
+  60:	00 c0       	rjmp	.+0      	; 0x62 <__vector_1+0xc>
+  62:	00 00       	nop
+	off(CLOCK_PULSE);
+  64:	c1 98       	cbi	0x18, 1	; 24
+
+
+	asm( // low-overhead ISR exit...
+  66:	0f 90       	pop	r0
+  68:	0f be       	out	0x3f, r0	; 63
+  6a:	0f 90       	pop	r0
+  6c:	18 95       	reti
+
+0000006e <main>:
+
+static volatile uint8_t clocks = 0;
+static volatile uint8_t enableInterrupt = 1;
+
+int main(void) {
+	out(CLOCK_PULSE);
+  6e:	b9 9a       	sbi	0x17, 1	; 23
+	out(START_BIT_PULSE);
+  70:	b8 9a       	sbi	0x17, 0	; 23
+	in(INT0_PIN);
+  72:	ba 98       	cbi	0x17, 2	; 23
+
+	sei(); // Enable interrupts
+  74:	78 94       	sei
+		EICRA |= (1 << ISC00); // Trigger on rising edge
+		EICRA |= (1 << ISC01);
+		EIMSK |= (1 << INT0);  // Enable INT0 interrupt vector
+
+	#elif defined (__AVR_ATtiny85__)
+		MCUCR |= (1 << ISC00); // Trigger on rising edge
+  76:	85 b7       	in	r24, 0x35	; 53
+  78:	81 60       	ori	r24, 0x01	; 1
+  7a:	85 bf       	out	0x35, r24	; 53
+		MCUCR |= (1 << ISC01);
+  7c:	85 b7       	in	r24, 0x35	; 53
+  7e:	82 60       	ori	r24, 0x02	; 2
+  80:	85 bf       	out	0x35, r24	; 53
+		GIMSK |= (1 << INT0);  // Enable INT0 interrupt vector
+  82:	8b b7       	in	r24, 0x3b	; 59
+  84:	80 64       	ori	r24, 0x40	; 64
+  86:	8b bf       	out	0x3b, r24	; 59
+
+	#endif
+
+	while(1) {
+		clocks = 0;
+  88:	10 92 62 00 	sts	0x0062, r1
+  8c:	1e c0       	rjmp	.+60     	; 0xca <main+0x5c>
+
+		// Detect start bit - 7us pulse
+		while(get(INT0_PIN)) {
+			clocks++;
+  8e:	80 91 62 00 	lds	r24, 0x0062
+  92:	8f 5f       	subi	r24, 0xFF	; 255
+  94:	80 93 62 00 	sts	0x0062, r24
+			if(clocks > 4) {
+  98:	80 91 62 00 	lds	r24, 0x0062
+  9c:	85 30       	cpi	r24, 0x05	; 5
+  9e:	a8 f0       	brcs	.+42     	; 0xca <main+0x5c>
+
+				if(enableInterrupt == 10) {
+  a0:	80 91 60 00 	lds	r24, 0x0060
+  a4:	8a 30       	cpi	r24, 0x0A	; 10
+  a6:	51 f4       	brne	.+20     	; 0xbc <main+0x4e>
+					on(START_BIT_PULSE); // Send start bit pulse
+  a8:	c0 9a       	sbi	0x18, 0	; 24
+					out(CLOCK_PULSE); // Enable interrupt clock OUTPUT
+  aa:	b9 9a       	sbi	0x17, 1	; 23
+					enableInterrupt = 0; // Reset counter
+  ac:	10 92 60 00 	sts	0x0060, r1
+					__builtin_avr_delay_cycles(50);
+  b0:	80 e1       	ldi	r24, 0x10	; 16
+  b2:	8a 95       	dec	r24
+  b4:	f1 f7       	brne	.-4      	; 0xb2 <main+0x44>
+  b6:	00 c0       	rjmp	.+0      	; 0xb8 <main+0x4a>
+					off(START_BIT_PULSE);					
+  b8:	c0 98       	cbi	0x18, 0	; 24
+  ba:	e6 cf       	rjmp	.-52     	; 0x88 <main+0x1a>
+				} else {
+					in(CLOCK_PULSE); // DISABLE interrupt clock OUTPUT
+  bc:	b9 98       	cbi	0x17, 1	; 23
+					enableInterrupt++;
+  be:	80 91 60 00 	lds	r24, 0x0060
+  c2:	8f 5f       	subi	r24, 0xFF	; 255
+  c4:	80 93 60 00 	sts	0x0060, r24
+  c8:	df cf       	rjmp	.-66     	; 0x88 <main+0x1a>
+
+	while(1) {
+		clocks = 0;
+
+		// Detect start bit - 7us pulse
+		while(get(INT0_PIN)) {
+  ca:	b2 9b       	sbis	0x16, 2	; 22
+  cc:	dd cf       	rjmp	.-70     	; 0x88 <main+0x1a>
+  ce:	df cf       	rjmp	.-66     	; 0x8e <main+0x20>
+
+000000d0 <_exit>:
+  d0:	f8 94       	cli
+
+000000d2 <__stop_program>:
+  d2:	ff cf       	rjmp	.-2      	; 0xd2 <__stop_program>
